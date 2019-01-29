@@ -19,10 +19,6 @@ $(function() {
   updateTextHandler(notes);
 });
 
-const getNoteTemplate = function(url){
-  return $.get(url);
-}
-
 const addNoteHandler = function(noteTemplate, notes){
   $("#color-picker").on("input", function(){
     let color = $(this)[0].value;
