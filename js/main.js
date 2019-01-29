@@ -14,7 +14,7 @@ $(function() {
   `
   let notes = [];
 
-  addNoteHandler(noteTemplate, notes.length);
+  addNoteHandler(noteTemplate, notes);
   removeNoteHandler(notes);
 });
 
@@ -22,15 +22,15 @@ const getNoteTemplate = function(url){
   return $.get(url);
 }
 
-const addNoteHandler = function(noteTemplate, id){
+const addNoteHandler = function(noteTemplate, notes){
   $("#color-picker").on("input", function(){
     let color = $(this)[0].value;
+    let id = notes.length;
 
-    let note = new noteObj(color, id)
+    let note = new noteObj(color, notes.length)
+    notes.push(note)
+
     noteView = noteTemplate.replace('{id}', id).replace('{color}', color)
-
-    console.log(noteView)
-
     $("#notes-container").append(noteView);
   })
 }
@@ -38,10 +38,12 @@ const addNoteHandler = function(noteTemplate, id){
 
 const removeNoteHandler = function(notes){
   $("#notes-container").on("click", ".remove-note-div", function(){
-    let $note = $(this).closest(".note-div")
-    $note.fadeOut(200);
+    let $noteDiv = $(this).closest(".note-div")
+    let noteId = $noteDiv.attr("id")
 
-    // delete note from notes list
+    $noteDiv.fadeOut(200);
+
+    delete notes[noteId]
   });
 }
 
@@ -53,3 +55,4 @@ function noteObj(color, id){
   self.color        = color
   self.updated      = Date.now()                        
 }
+
