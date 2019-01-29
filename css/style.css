@@ -1,5 +1,29 @@
+.note-div {
+  width: 200px;
+}
+
 .note-textbox {
+  width: 100%;
   background-color: pink;
   border-radius: 6px;
   border: 1px solid;
+  font-size: 14px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.remove-note-div {
+  text-align: right;
+}
+
+.remove-note-icon {
+  position: relative;
+  left: 5px;
+  top: 35px;
+  color: #777;
+  background-color: none;
+  border: 0;
+  z-index: 2;
+  padding: 0 7px;
+  cursor: pointer;
 }
