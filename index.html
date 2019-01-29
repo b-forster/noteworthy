@@ -12,7 +12,17 @@
   <div id="body-container">
     <h1 class="page-title">Your Notes</h1>
     <div id="notes-container"></div>
-    <div id="form-container"></div>
+    <div id="form-container">
+      <label for="color-picker">Create a new note:</label>
+      <input type="color" id="color-picker" name="color-picker" value="#e66465" list="color-options">
+      <datalist id="color-options">
+        <option>#ff0000</option>
+        <option>#0000ff</option>
+        <option>#00ff00</option>
+        <option>#ffff00</option>
+        <option>#00ffff</option>
+      </datalist>
+    </div>
   </div>
 
   <script src="js/main.js"></script>
