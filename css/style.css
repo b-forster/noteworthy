@@ -92,3 +92,12 @@
   text-align: center;
   border-radius: 3px;
 }
+
+#clear-search-button{
+  background-color: gray;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+}

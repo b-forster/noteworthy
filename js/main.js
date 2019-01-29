@@ -26,6 +26,7 @@ $(function() {
   addTagHandler(tags, notes);
   addSearchFieldHandler(tags);
   filterByTagsHandler(tags, notes);
+  clearSearchHandler();
 });
 
 const addNoteHandler = function(noteTemplate, notes){
@@ -130,6 +131,14 @@ const filterByTagsHandler = function(tags, notes){
     });
 
     $(this).trigger("reset");
+  });
+}
+
+const clearSearchHandler = function(){
+  $("#clear-search-button").on("click", function(event){
+    $("#filter-form").trigger("reset");
+
+    $(".note-div").show();
   });
 }
 
