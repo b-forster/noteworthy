@@ -28,6 +28,22 @@
         <option>#9dc1ff</option>
       </datalist>
     </div>
+    <div id="filter-container">
+      <span id="filter-text">
+        Show notes with 
+        <select>
+          <option value="or">any</option>
+          <option value="and">all</option>
+        </select>
+        of the following tags:
+      </span>
+      <form id="filter-form">
+        <input type="input" class="filter-input" name="filter-input" list="tag-options">
+        <datalist class="tag-options">{tagOptions}</datalist>
+        <input type="button" class="add-field-button" value="+">
+        <input type="submit" id="filter-submit-button" value="GO">
+      </form>
+    </div>
   </div>
 
   <script src="js/main.js"></script>

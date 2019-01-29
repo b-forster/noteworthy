@@ -61,3 +61,34 @@
   overflow: visible;
 }
 
+#filter-text {
+  font-size: 10px;
+  display: inline;
+}
+
+#filter-form{
+  display: inline;
+  padding: 10px;
+}
+
+.filter-input{
+  width: 70px;
+}
+
+.add-field-button{
+  background-color: seagreen;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 20px;
+}
+
+#filter-submit-button{
+  background-color: royalblue;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+}

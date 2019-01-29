@@ -1,6 +1,6 @@
 $(function() {
   let notes = [];
-  let tags = [];
+  let tags = new Set();
 
   const noteTemplate = `
   <div class="note-div" id="{id}">
@@ -24,6 +24,8 @@ $(function() {
   removeNoteHandler(notes);
   updateTextHandler(notes);
   addTagHandler(tags, notes);
+  addSearchFieldHandler(tags);
+  filterByTagsHandler(tags, notes);
 });
 
 const addNoteHandler = function(noteTemplate, notes){
@@ -66,21 +68,77 @@ const addTagHandler = function(tags, notes){
   $("#notes-container").on("change", ".add-tag-input", function(){
     let noteId = $(this).closest(".note-div").attr("id");
     let newTag = $(this)[0].value
+    let originalNumOfTags = notes[noteId].tags.size;
 
-    notes[noteId].tags.push(newTag);
-    tags.push(newTag);
+    notes[noteId].tags.add(newTag);
+    tags.add(newTag);
 
-    $(this).closest(".note-div").find(".tags-container").append(`<span class="tag">${newTag}</span>`);
+    // Append tag to note only if it didn't exist before (i.e. size of tags has increased)
+    if (notes[noteId].tags.size > originalNumOfTags){
+      $(this).closest(".note-div").find(".tags-container").append(`<span class="tag">${newTag}</span>`);
+    }
 
     $(this).closest("form").trigger("reset");
   });
 }
 
+const addSearchFieldHandler = function(tags){
+  $(".add-field-button").on("click", function(){
+    $(this).before(
+      `<input type="input" class="filter-input" name="filter-input" list="tag-options">
+        <datalist class="tag-options">{tagOptions}</datalist>
+      `);
+  });
+}
+  
+const filterByTagsHandler = function(tags, notes){
+  $("#filter-form").on("submit", function(event){
+    event.preventDefault();
+    let searchFields = $(this).find(".filter-input")
+    let searchType = $(this).closest("#filter-container").find("select")[0].value
+
+    let searchTerms = [];
+
+    [...searchFields].forEach(function(tag){
+        searchTerms.push(tag.value);
+    });
+
+    let notesToKeep = [];
+
+    if (searchType == "or"){
+      notes.forEach(function(note){
+          let keepNote = searchTerms.some(function(searchTag){
+            return note.tags.has(searchTag);
+          })
+          if (keepNote){notesToKeep.push(note.id);}
+      });
+    } else {
+      notes.forEach(function(note){
+        let keepNote = searchTerms.every(function(searchTag){
+          return note.tags.has(searchTag);
+        })
+        if (keepNote){notesToKeep.push(note.id);}
+      });
+    }
+
+    notes.forEach(function(note){
+      if(!notesToKeep.includes(note.id)){
+        let $noteDiv = $(`#${note.id}`)
+
+        $noteDiv.fadeOut(200);
+      }
+    });
+
+    $(this).trigger("reset");
+  });
+}
+
+
 function noteObj(color, id){
   let self          = this;
   self.id           = id
   self.text         = ""
-  self.tags         = []
+  self.tags         = new Set()
   self.color        = color
   self.updated      = Date.now();                        
 }
