@@ -5,6 +5,7 @@ body {
 
 .note-div {
   width: 200px;
+  display: inline-block;
 }
 
 .note-textbox {
