@@ -14,7 +14,8 @@ $(function() {
     <div class="tags-container"></div>
     <form class="add-tag-form">
       <label for="add-tag-input" class="add-tag-label">Add a tag:</label>
-      <input type="input" class="add-tag-input" name="add-tag-input">
+      <input type="input" class="add-tag-input" name="add-tag-input" list="tag-options">
+      <datalist id="tag-options">{tagOptions}</datalist>
     </form>
   </div>
   `
@@ -31,10 +32,10 @@ const addNoteHandler = function(noteTemplate, notes){
     let id = notes.length;
 
     let note = new noteObj(color, notes.length)
-    notes.push(note)
+    notes.push(note);
 
     noteView = noteTemplate.replace('{id}', id)
-                           .replace('{color}', color)
+                           .replace('{color}', color);
 
     $("#notes-container").append(noteView);
   })
@@ -56,20 +57,20 @@ const updateTextHandler = function(notes){
   $("#notes-container").on("change", ".note-textbox", function(){
     let noteId = $(this).closest(".note-div").attr("id")
 
-    notes[noteId].text = $(this)[0].value
-    notes[noteId].updated = Date.now()
+    notes[noteId].text = $(this)[0].value;
+    notes[noteId].updated = Date.now();
   });
 }
 
 const addTagHandler = function(tags, notes){
   $("#notes-container").on("change", ".add-tag-input", function(){
-    let noteId = $(this).closest(".note-div").attr("id")
+    let noteId = $(this).closest(".note-div").attr("id");
     let newTag = $(this)[0].value
 
-    notes[noteId].tags.push(newTag)
-    tags.push(newTag)
+    notes[noteId].tags.push(newTag);
+    tags.push(newTag);
 
-    $(".tags-container").append(`<span class="tag">${newTag}</span>`);
+    $(this).closest(".note-div").find(".tags-container").append(`<span class="tag">${newTag}</span>`);
 
     $(this).closest("form").trigger("reset");
   });
@@ -81,6 +82,6 @@ function noteObj(color, id){
   self.text         = ""
   self.tags         = []
   self.color        = color
-  self.updated      = Date.now()                        
+  self.updated      = Date.now();                        
 }
 
