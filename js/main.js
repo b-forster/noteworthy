@@ -16,6 +16,7 @@ $(function() {
 
   addNoteHandler(noteTemplate, notes);
   removeNoteHandler(notes);
+  updateTextHandler(notes);
 });
 
 const getNoteTemplate = function(url){
@@ -44,6 +45,15 @@ const removeNoteHandler = function(notes){
     $noteDiv.fadeOut(200);
 
     delete notes[noteId]
+  });
+}
+
+const updateTextHandler = function(notes){
+  $("#notes-container").on("change", ".note-textbox", function(){
+    let noteId = $(this).closest(".note-div").attr("id")
+
+    notes[noteId].text = $(this)[0].value
+    notes[noteId].updated = Date.now()
   });
 }
 
