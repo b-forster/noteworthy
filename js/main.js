@@ -15,6 +15,7 @@ $(function() {
   let notes = [];
 
   addNoteHandler(noteTemplate, notes.length);
+  removeNoteHandler(notes);
 });
 
 const getNoteTemplate = function(url){
@@ -34,6 +35,15 @@ const addNoteHandler = function(noteTemplate, id){
   })
 }
 
+
+const removeNoteHandler = function(notes){
+  $("#notes-container").on("click", ".remove-note-div", function(){
+    let $note = $(this).closest(".note-div")
+    $note.fadeOut(200);
+
+    // delete note from notes list
+  });
+}
 
 function noteObj(color, id){
   let self          = this;
