@@ -1,5 +1,6 @@
-body {
+#body-container {
   font-family: Helvetica;
+  margin: 0 auto;
 }
 
 
@@ -33,3 +34,22 @@ body {
   padding: 0 7px;
   cursor: pointer;
 }
+
+.add-tag-div{
+  width: 70%;
+  margin: 0 auto;
+}
+
+.add-tag-label{
+  font-size: 12px;
+  display: inline;
+
+}
+
+.add-tag-form{
+  width: 80px;
+  display: inline;
+}
+
+
+

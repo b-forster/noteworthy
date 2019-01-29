@@ -1,4 +1,7 @@
 $(function() {
+  let notes = [];
+  let tags = [];
+
   const noteTemplate = `
   <div class="note-div" id="{id}">
     <div class="remove-note-div">
@@ -8,15 +11,18 @@ $(function() {
     <textarea class="note-textbox" rows="7" style="background-color:{color};">
     </textarea>
 
-    <div class="tags-container">
-    </div>
+    <div class="tags-container"></div>
+    <form class="add-tag-form">
+      <label for="add-tag-input" class="add-tag-label">Add a tag:</label>
+      <input type="input" class="add-tag-input" name="add-tag-input">
+    </form>
   </div>
   `
-  let notes = [];
 
   addNoteHandler(noteTemplate, notes);
   removeNoteHandler(notes);
   updateTextHandler(notes);
+  addTagHandler(tags, notes);
 });
 
 const addNoteHandler = function(noteTemplate, notes){
@@ -27,7 +33,9 @@ const addNoteHandler = function(noteTemplate, notes){
     let note = new noteObj(color, notes.length)
     notes.push(note)
 
-    noteView = noteTemplate.replace('{id}', id).replace('{color}', color)
+    noteView = noteTemplate.replace('{id}', id)
+                           .replace('{color}', color)
+
     $("#notes-container").append(noteView);
   })
 }
@@ -50,6 +58,20 @@ const updateTextHandler = function(notes){
 
     notes[noteId].text = $(this)[0].value
     notes[noteId].updated = Date.now()
+  });
+}
+
+const addTagHandler = function(tags, notes){
+  $("#notes-container").on("change", ".add-tag-input", function(){
+    let noteId = $(this).closest(".note-div").attr("id")
+    let newTag = $(this)[0].value
+
+    notes[noteId].tags.push(newTag)
+    tags.push(newTag)
+
+    $(".tags-container").append(`<span class="tag">${newTag}</span>`);
+
+    $(this).closest("form").trigger("reset");
   });
 }
 
